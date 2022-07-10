@@ -9,7 +9,7 @@ import cv2
 import matplotlib.pyplot as plt
 
 import data.kitti_scans
-import data.rosbag_scans
+#import data.rosbag_scans
 import utility.projection
 import preprocessing.normal_computation
 
@@ -92,6 +92,7 @@ class Preprocesser:
                                                                                    dataset_name=dataset_name,
                                                                                    preprocessing_fct=self.apply_preprocessing_step)
                     kitti_preprocessor.preprocess() 
+                    '''
                 elif self.config[dataset_name]["dataset_type"] == "rosbag":
                     rosbag_preprocessor = data.rosbag_scans.RosbagDatasetPreprocessor(config=self.config,
                                                                                       dataset_name=dataset_name,
@@ -99,5 +100,6 @@ class Preprocesser:
                                                                                           "topic"],
                                                                                       preprocessing_fct=self.apply_preprocessing_step)
                     rosbag_preprocessor.preprocess()
+                    '''
                 else:
                     raise Exception('Dataset type not yet supported. Currently only "kitti" and "rosbag" available.')
