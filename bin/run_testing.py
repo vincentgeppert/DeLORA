@@ -27,6 +27,7 @@ def config(testing_run_name, experiment_name, checkpoint):
     network_hyperparameters = yaml.load(f, Loader=yaml.FullLoader)
     config.update(network_hyperparameters)
 
+    
     # Parameters from previous run?
     if 'parameters' in torch.load(checkpoint):
         print("\033[92m" +
@@ -36,7 +37,7 @@ def config(testing_run_name, experiment_name, checkpoint):
     else:
         print("Checkpoint does not contain any parameters. Using those ones specified in the YAML files.")
         parameters_exist = False
-
+    
     # Parameters that are set depending on whether provided in checkpoint
     if parameters_exist:
         loaded_config = torch.load(checkpoint)['parameters']
@@ -47,6 +48,12 @@ def config(testing_run_name, experiment_name, checkpoint):
         for dataset in loaded_config["datasets"]:
             loaded_config[dataset]["testing_identifiers"] = config[dataset]["testing_identifiers"]
             loaded_config[dataset]["data_identifiers"] = loaded_config[dataset]["testing_identifiers"]
+            ###
+            if dataset == "kitti":
+                loaded_config[dataset]["preprocessed_path"] = config[dataset]["preprocessed_path"]
+                loaded_config[dataset]["pose_data_path"] = config[dataset]["pose_data_path"]
+                loaded_config[dataset]["data_path"] = config[dataset]["data_path"]
+            ####
         ## Inference only
         loaded_config["inference_only"] = config["inference_only"]
         loaded_config["store_dataset_in_RAM"] = config["store_dataset_in_RAM"]

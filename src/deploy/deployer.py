@@ -110,7 +110,7 @@ class Deployer(object):
             index_of_sequence]
         computed_poses = utility.poses.compute_poses(
             computed_transformations=computed_transformations)
-
+        
         # Log things to mlflow artifacts
         utility.poses.write_poses_to_text_file(
             file_name="/tmp/" + self.config["run_name"] + "_poses_text_file_" + dataset + "_" + format(data_identifier,
@@ -156,7 +156,7 @@ class Deployer(object):
             mlflow.log_artifact(
                 "/tmp/" + self.config["run_name"] + "_plot_trans_rot_" + dataset + "_" + format(data_identifier,
                                                                                                 '02d') + ".pdf")
-
+        
     def log_config(self):
         for dict_entry in self.config:
             mlflow.log_param(dict_entry, self.config[dict_entry])
@@ -202,20 +202,20 @@ class Deployer(object):
         # Random rotation
         if self.config["random_point_cloud_rotations"]:
             raise Exception("Needs to be verified for larger batches")
-            if self.config["random_rotations_only_yaw"]:
-                direction = torch.zeros((1, 3), device=self.device)
-                direction[0, 2] = 1
-            else:
-                direction = (torch.rand((1, 3), device=self.device))
-            direction = direction / torch.norm(direction)
-            magnitude = (torch.rand(1, device=self.device) - 0.5) * (
-                    self.config["magnitude_random_rot"] / 180.0 * torch.Tensor([math.pi]).to(
+        if self.config["random_rotations_only_yaw"]:
+            direction = torch.zeros((1, 3), device=self.device)
+            direction[0, 2] = 1
+        else:
+            direction = (torch.rand((1, 3), device=self.device))
+        direction = direction / torch.norm(direction)
+        magnitude = (torch.rand(1, device=self.device) - 0.5) * (
+                self.config["magnitude_random_rot"] / 180.0 * torch.Tensor([math.pi]).to(
                 self.device))
-            euler = direction * magnitude
-            preprocessed_data["scan_2"] = self.rotate_point_cloud_euler_vector(
-                point_cloud=preprocessed_data["scan_2"], euler=euler)
-            preprocessed_data["normal_list_2"] = self.rotate_point_cloud_euler_vector(
-                point_cloud=preprocessed_data["normal_list_2"], euler=euler)
+        euler = direction * magnitude
+        preprocessed_data["scan_2"] = self.rotate_point_cloud_euler_vector(
+            point_cloud=preprocessed_data["scan_2"], euler=euler)
+        preprocessed_data["normal_list_2"] = self.rotate_point_cloud_euler_vector(
+            point_cloud=preprocessed_data["normal_list_2"], euler=euler)
 
         return preprocessed_data
 

@@ -91,7 +91,7 @@ class Preprocesser:
                     kitti_preprocessor = data.kitti_scans.KITTIDatasetPreprocessor(config=self.config,
                                                                                    dataset_name=dataset_name,
                                                                                    preprocessing_fct=self.apply_preprocessing_step)
-                    kitti_preprocessor.preprocess()
+                    kitti_preprocessor.preprocess() 
                 elif self.config[dataset_name]["dataset_type"] == "rosbag":
                     rosbag_preprocessor = data.rosbag_scans.RosbagDatasetPreprocessor(config=self.config,
                                                                                       dataset_name=dataset_name,

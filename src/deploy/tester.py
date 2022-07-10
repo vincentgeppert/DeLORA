@@ -68,7 +68,7 @@ class Tester(deploy.deployer.Deployer):
                     preprocessed_dicts=preprocessed_dicts,
                     epoch_losses=epoch_losses,
                     log_images_bool=not index % 10)
-
+                    
             for preprocessed_dict in preprocessed_dicts:
                 # Case: we reached the next sequence or the next dataset --> log
                 if preprocessed_dict["index_sequence"] != index_of_sequence or preprocessed_dict[
@@ -116,7 +116,7 @@ class Tester(deploy.deployer.Deployer):
                                                  pin_memory=True if self.config[
                                                                         "device"] == torch.device(
                                                      "cuda") else False)
-
+        
         # Check whether experiment already exists
         client = mlflow.tracking.MlflowClient()
         experiment_list = client.list_experiments()
@@ -137,7 +137,7 @@ class Tester(deploy.deployer.Deployer):
             epoch_losses = self.test_dataset(dataloader=dataloader)
 
             dataset_index = 0
-
+        
             if not self.config["inference_only"]:
                 epoch_losses["loss_epoch"] /= self.steps_per_epoch
                 epoch_losses["loss_point_cloud_epoch"] /= self.steps_per_epoch
