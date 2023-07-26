@@ -26,7 +26,7 @@ class KITTIDatasetPreprocessor():
         for index in range(self.point_cloud_dataset.num_elements):
             if not index % 10:
                 print("Preprocessing scan " + str(index) + "/" + str(
-                    self.point_cloud_dataset.num_elements) + " from sequence " + format(self.identifier, '02d') + ".")
+                    self.point_cloud_dataset.num_elements) + " from sequence " + format(self.identifier, '04d') + ".")
             scan = self.point_cloud_dataset.get_velo_torch(index).unsqueeze(0)
             # Apply preprocessing
             self.preprocessing_fct(scan=scan, index=index)
@@ -39,7 +39,7 @@ class KITTIPointCloudDataset(torch.utils.data.dataset.Dataset):
         self.identifier = identifier
         self.device = device
         self.velo_file_list = sorted(glob.glob(
-            os.path.join(self.base_dir, format(self.identifier, '02d'), "velodyne", '*.bin')))
+            os.path.join(self.base_dir, format(self.identifier, '04d'), "velodyne", '*.bin')))
         self.velo_data_generator = pykitti.utils.yield_velo_scans(self.velo_file_list)
         self.num_elements = len(self.velo_file_list)
 

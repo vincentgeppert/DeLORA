@@ -18,12 +18,12 @@ import deploy.tester
               default="testing")
 @click.option('--checkpoint', prompt='Path to the saved checkpoint of the model you want to test')
 def config(testing_run_name, experiment_name, checkpoint):
-    f = open('config/config_datasets.yaml')
+    f = open('/disk/no_backup/ju878/model_contradictions/supervised_unsupervised_anomaly/self_odometry/DeLORA//config/config_datasets.yaml')
     config = yaml.load(f, Loader=yaml.FullLoader)
-    f = open('config/deployment_options.yaml')
+    f = open('/disk/no_backup/ju878/model_contradictions/supervised_unsupervised_anomaly/self_odometry/DeLORA//config/deployment_options.yaml')
     deployment_options = yaml.load(f, Loader=yaml.FullLoader)
     config.update(deployment_options)
-    f = open('config/hyperparameters.yaml')
+    f = open('/disk/no_backup/ju878/model_contradictions/supervised_unsupervised_anomaly/self_odometry/DeLORA//config/hyperparameters.yaml')
     network_hyperparameters = yaml.load(f, Loader=yaml.FullLoader)
     config.update(network_hyperparameters)
 

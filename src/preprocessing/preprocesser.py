@@ -80,7 +80,7 @@ class Preprocesser:
                 self.config[dataset_name]["data_identifier"] = data_identifier
                 # Names for writing to disk
                 name = os.path.join(self.config[dataset_name]["preprocessed_path"],
-                                    format(self.config[dataset_name]["data_identifier"], '02d') + "/")
+                                    format(self.config[dataset_name]["data_identifier"], '04d') + "/")
                 self.normals_name = os.path.join(name, "normals/")
                 self.ensure_dir(file_path=self.normals_name)
                 self.scans_name = os.path.join(name, "scans/")

@@ -113,49 +113,49 @@ class Deployer(object):
         
         # Log things to mlflow artifacts
         utility.poses.write_poses_to_text_file(
-            file_name="/tmp/" + self.config["run_name"] + "_poses_text_file_" + dataset + "_" + format(data_identifier,
-                                                                                                       '02d') + ".txt",
+            file_name="/tmp/" + "poses_text_file_" + dataset + "_" + format(data_identifier,
+                                                                                                       '04d') + ".txt",
             poses=computed_poses)
         mlflow.log_artifact(
-            "/tmp/" + self.config["run_name"] + "_poses_text_file_" + dataset + "_" + format(data_identifier,
-                                                                                             '02d') + ".txt")
+            "/tmp/" + "poses_text_file_" + dataset + "_" + format(data_identifier,
+                                                                                             '04d') + ".txt")
         np.save(
-            "/tmp/" + self.config["run_name"] + "_transformations_" + dataset + "_" + format(data_identifier,
-                                                                                             '02d') + ".npy",
+            "/tmp/" + "transformations_" + dataset + "_" + format(data_identifier,
+                                                                                             '04d') + ".npy",
             computed_transformations)
         np.save(
-            "/tmp/" + self.config["run_name"] + "_poses_" + dataset + "_" + format(data_identifier, '02d') + ".npy",
+            "/tmp/" + "poses_" + dataset + "_" + format(data_identifier, '04d') + ".npy",
             computed_poses)
         mlflow.log_artifact(
-            "/tmp/" + self.config["run_name"] + "_transformations_" + dataset + "_" + format(data_identifier,
-                                                                                             '02d') + ".npy")
+            "/tmp/" + "transformations_" + dataset + "_" + format(data_identifier,
+                                                                                             '04d') + ".npy")
         mlflow.log_artifact(
-            "/tmp/" + self.config["run_name"] + "_poses_" + dataset + "_" + format(data_identifier, '02d') + ".npy")
+            "/tmp/" + "poses_" + dataset + "_" + format(data_identifier, '04d') + ".npy")
         utility.plotting.plot_map(computed_poses=computed_poses,
-                                  path_y="/tmp/" + self.config["run_name"] + "_map_" + dataset + "_" + format(
-                                      data_identifier, '02d') + "_y.png",
-                                  path_2d="/tmp/" + self.config["run_name"] + "_map_" + dataset + "_" + format(
-                                      data_identifier, '02d') + "_2d.png",
-                                  path_3d="/tmp/" + self.config["run_name"] + "_map_" + dataset + "_" + format(
-                                      data_identifier, '02d') + "_3d.png",
+                                  path_y="/tmp/" + "map_" + dataset + "_" + format(
+                                      data_identifier, '04d') + "_y.png",
+                                  path_2d="/tmp/" + "map_" + dataset + "_" + format(
+                                      data_identifier, '04d') + "_2d.png",
+                                  path_3d="/tmp/" + "map_" + dataset + "_" + format(
+                                      data_identifier, '04d') + "_3d.png",
                                   groundtruth=gt_translations,
                                   dataset=dataset)
         mlflow.log_artifact(
-            "/tmp/" + self.config["run_name"] + "_map_" + dataset + "_" + format(data_identifier, '02d') + "_y.png")
+            "/tmp/" + "map_" + dataset + "_" + format(data_identifier, '04d') + "_y.png")
         mlflow.log_artifact(
-            "/tmp/" + self.config["run_name"] + "_map_" + dataset + "_" + format(data_identifier, '02d') + "_2d.png")
+            "/tmp/" + "map_" + dataset + "_" + format(data_identifier, '04d') + "_2d.png")
         mlflow.log_artifact(
-            "/tmp/" + self.config["run_name"] + "_map_" + dataset + "_" + format(data_identifier, '02d') + "_3d.png")
+            "/tmp/" + "map_" + dataset + "_" + format(data_identifier, '04d') + "_3d.png")
         if gt_poses is not None:
             utility.plotting.plot_translation_and_rotation(
                 computed_transformations=np.asarray(computed_transformations),
-                path="/tmp/" + self.config["run_name"] + "_plot_trans_rot_" + dataset + "_" + format(data_identifier,
-                                                                                                     '02d') + ".pdf",
+                path="/tmp/" + "plot_trans_rot_" + dataset + "_" + format(data_identifier,
+                                                                                                     '04d') + ".pdf",
                 groundtruth=gt_poses,
                 dataset=dataset)
             mlflow.log_artifact(
-                "/tmp/" + self.config["run_name"] + "_plot_trans_rot_" + dataset + "_" + format(data_identifier,
-                                                                                                '02d') + ".pdf")
+                "/tmp/" + "plot_trans_rot_" + dataset + "_" + format(data_identifier,
+                                                                                                '04d') + ".pdf")
         
     def log_config(self):
         for dict_entry in self.config:

@@ -41,12 +41,12 @@ class PreprocessedPointCloudDataset(torch.utils.data.dataset.Dataset):
             ## Go through sequences
             for index_of_sequence, data_identifier in enumerate(self.config[dataset]["data_identifiers"]):
                 if not os.path.exists(
-                        os.path.join(self.config[dataset]["preprocessed_path"], format(data_identifier, '02d') + "/")):
+                        os.path.join(self.config[dataset]["preprocessed_path"], format(data_identifier, '04d') + "/")):
                     raise Exception(
                         "The specified path and dataset " + os.path.join(self.config[dataset]["preprocessed_path"],
                                                                          format(data_identifier,
-                                                                                '02d') + "/") + "does not exist.")
-                name = os.path.join(self.config[dataset]["preprocessed_path"], format(data_identifier, '02d') + "/")
+                                                                                '04d') + "/") + "does not exist.")
+                name = os.path.join(self.config[dataset]["preprocessed_path"], format(data_identifier, '04d') + "/")
                 normals_name = os.path.join(name, "normals/")
                 scans_name = os.path.join(name, "scans/")
 
@@ -55,12 +55,14 @@ class PreprocessedPointCloudDataset(torch.utils.data.dataset.Dataset):
                 scans_files_in_sequences.append(sorted(glob.glob(os.path.join(scans_name, '*.npy'))))
                 # -1 is important (because looking at consecutive scans at t and t+1)
                 num_scans_in_sequences[index_of_sequence] = len(normals_files_in_sequences[index_of_sequence]) - 1
+                #print(num_scans_in_sequences)
 
             num_sequences_in_datasets[index_of_dataset] = len(self.config[dataset]["data_identifiers"])
             num_scans_in_sequences_in_datasets.append(num_scans_in_sequences)
             num_scans_in_datasets[index_of_dataset] = np.sum(num_scans_in_sequences, dtype=int)
             self.normals_files_in_datasets.append(normals_files_in_sequences)
             self.scans_files_in_datasets.append(scans_files_in_sequences)
+        print(len(num_scans_in_sequences))
 
         self.num_scans_overall = np.sum(num_scans_in_datasets, dtype=int)
 
@@ -180,7 +182,7 @@ class PoseDataset(torch.utils.data.dataset.Dataset):
                     config[dataset]["data_identifiers"]):
                 if base_dir:
                     pose_file_name = os.path.join(base_dir,
-                                                  format(data_identifier, '02d') + '.txt')
+                                                  format(data_identifier, '04d') + '.txt')
                     with open(pose_file_name, newline="") as csvfile:
                         row_reader = csv.reader(csvfile, delimiter=" ")
                         num_poses = sum(1 for row in row_reader)
@@ -194,7 +196,7 @@ class PoseDataset(torch.utils.data.dataset.Dataset):
                     num_scans_sequences[index_of_sequence] = num_poses - 1
                 else:
                     print("Groundtruth file does not exist. Not using any ground truth for it.")
-                    name = os.path.join(self.config[dataset]["preprocessed_path"], format(data_identifier, '02d') + "/")
+                    name = os.path.join(self.config[dataset]["preprocessed_path"], format(data_identifier, '04d') + "/")
                     normals_name = os.path.join(name, "normals/")
                     normals_files_in_sequence = sorted(glob.glob(os.path.join(normals_name, '*.npy')))
                     num_poses = len(normals_files_in_sequence)
