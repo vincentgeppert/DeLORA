@@ -7,4 +7,3 @@ __pycache__/
 # Datasets
 datasets/darpa
 datasets/kitti
-mlruns/
