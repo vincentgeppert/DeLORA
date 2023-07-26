@@ -1,0 +1,4 @@
+artifact_location: file:///disk/no_backup/ju878/model_contradictions/supervised_unsupervised_anomaly/self_odometry/DeLORA/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: testing
